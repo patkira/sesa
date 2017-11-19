@@ -11,6 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::group(['middleware' => ['web']], function () {
+    Route::get('/', function () {
+        return view('welcome');
+    })->middleware('guest');
+    Route::get('/news', 'NewsController@index');
+    Route::post('/news-article', 'NewsController@store');
+    Route::delete('/news-article/{news}', 'NewsController@destroy');
+    Route::auth();
 });
